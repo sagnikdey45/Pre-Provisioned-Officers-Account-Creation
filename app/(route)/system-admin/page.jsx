@@ -1,21 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import {
-  Upload,
-  Trash2,
-  Plus,
-  Download,
-  Database,
-  Edit3,
-  X,
-} from "lucide-react";
+import { useState } from "react";
+import { Plus, Database, Trash2, Users, UploadCloud } from "lucide-react";
+
 import CSVUploader from "@/components/SystemAdmin/CSVUploader";
 import OfficersTable from "@/components/SystemAdmin/OfficersTable";
 import AddOfficerDialog from "@/components/SystemAdmin/AddOfficerDialog";
 import { transformOfficerData } from "@/lib/transformData";
 import { toast } from "sonner";
-import { ModeToggle } from "@/components/ModeToggle";
 
 export default function SystemAdminPage() {
   const [officers, setOfficers] = useState([]);
@@ -31,124 +23,145 @@ export default function SystemAdminPage() {
   };
 
   const handleSubmitToDatabase = () => {
-    if (officers.length === 0) {
+    if (!officers.length) {
       toast.error("No officers to submit!");
       return;
     }
 
     const result = transformOfficerData(officers);
+
     console.log("=== CITYCARE DATABASE SUBMISSION ===");
-    console.log("USERS:", result.users);
-    console.log("UNIT OFFICERS:", result.unitOfficers);
-    console.log("FIELD OFFICERS:", result.fieldOfficers);
+    console.log(result);
     console.log("====================================");
 
-    toast.success(
-      `Successfully submitted ${officers.length} officers to database!`,
-    );
+    toast.success(`Submitted ${officers.length} officers`);
   };
 
   return (
-    <div
-      className="min-h-screen transition-all duration-500 
-  bg-gradient-to-br from-teal-50 to-cyan-50 text-gray-900 
-  dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 dark:text-cyan-50 
-  p-3 sm:p-6 md:p-8"
-    >
-      {/* Header Section */}
+    <div className="w-full h-full bg-white dark:bg-slate-950 px-4 sm:px-6 py-6 space-y-6">
+      {/* ================= HEADER ================= */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h1
+            className="text-2xl sm:text-3xl font-bold 
+            bg-gradient-to-r from-teal-600 to-cyan-600 
+            dark:from-teal-400 dark:to-cyan-400 
+            bg-clip-text text-transparent"
+          >
+            Officer Management
+          </h1>
+
+          <p className="text-sm text-teal-700/80 dark:text-cyan-300/80 mt-1">
+            Pre-provision and manage officer accounts efficiently
+          </p>
+        </div>
+
+        {/* ACTION BUTTONS */}
+        <div className="flex items-center gap-3 flex-wrap">
+          <button
+            onClick={() => setIsAddDialogOpen(true)}
+            className="
+              flex items-center gap-2 px-4 py-2 rounded-xl
+              bg-gradient-to-r from-teal-600 to-cyan-600
+              hover:from-teal-700 hover:to-cyan-700
+              text-white font-medium shadow-md hover:shadow-lg
+              transition-all duration-300 active:scale-95
+            "
+          >
+            <Plus className="w-4 h-4" />
+            Add Officer
+          </button>
+
+          <button
+            onClick={handleSubmitToDatabase}
+            disabled={!officers.length}
+            className="
+              flex items-center gap-2 px-4 py-2 rounded-xl
+              border border-teal-300 dark:border-cyan-700
+              text-teal-700 dark:text-cyan-300
+              hover:bg-teal-50 dark:hover:bg-cyan-900/30
+              font-medium shadow-sm transition-all duration-300
+              disabled:opacity-50
+            "
+          >
+            <Database className="w-4 h-4" />
+            Submit ({officers.length})
+          </button>
+        </div>
+      </div>
+
+      {/* ================= UPLOAD SECTION ================= */}
       <div
-        className="max-w-7xl mx-auto mb-6 sm:mb-8 transition-all duration-500 
-  bg-white/40 border-teal-200/40 
-  dark:bg-slate-800/40 dark:border-cyan-700/40 
-  backdrop-blur-sm rounded-2xl p-4 sm:p-6"
+        className="
+        bg-white dark:bg-slate-900
+        border border-teal-100 dark:border-cyan-800
+        rounded-2xl p-5 shadow-sm hover:shadow-md
+        transition-all duration-300
+      "
       >
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6">
-          <div className="flex-1">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 dark:from-teal-400 dark:to-cyan-400 bg-clip-text text-transparent mb-1 sm:mb-2 leading-tight pb-1">
-              CityCare Admin
-            </h1>
-            <p className="text-sm sm:text-base md:text-lg text-teal-700 dark:text-cyan-300 font-medium">
-              Officer Onboarding Panel
-            </p>
+        <div className="flex items-center gap-2 mb-4">
+          <div className="p-2 rounded-lg bg-teal-100 dark:bg-cyan-900/30">
+            <UploadCloud className="w-5 h-5 text-teal-600 dark:text-cyan-300" />
           </div>
 
-          {/* Dark Mode Toggle & Actions */}
-          <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
-            <ModeToggle />
-
-            <button
-              onClick={handleSubmitToDatabase}
-              disabled={officers.length === 0}
-              className="flex items-center gap-1 sm:gap-2 px-3 sm:px-5 py-2 sm:py-3 bg-gradient-to-r from-teal-600 to-cyan-600 dark:from-cyan-600 dark:to-teal-500 text-white dark:text-slate-950 text-xs sm:text-sm font-semibold rounded-2xl hover:from-teal-700 hover:to-cyan-700 dark:hover:from-cyan-700 dark:hover:to-teal-600 shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
-            >
-              <Database className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="hidden sm:inline">Add to Database</span>
-              <span className="text-xs font-bold">({officers.length})</span>
-            </button>
-          </div>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+            Bulk Upload
+          </h2>
         </div>
+
+        <CSVUploader onOfficersUpdate={handleOfficersUpdate} />
       </div>
 
-      {/* Main Content - Full Width Upload, Table Below */}
-      <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8">
-        {/* Upload Section - Full Width */}
-        <div className="space-y-4 sm:space-y-6">
-          {/* Add Officer Button - Top */}
-          <div className="flex justify-center sm:justify-start">
-            <button
-              onClick={() => setIsAddDialogOpen(true)}
-              className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-teal-500 to-cyan-600 dark:from-cyan-600 dark:to-teal-500 hover:from-teal-600 hover:to-cyan-700 dark:hover:from-cyan-700 dark:hover:to-teal-600 text-white dark:text-slate-950 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group flex-shrink-0"
-              title="Add new officer"
-            >
-              <Plus className="w-6 h-6 sm:w-7 sm:h-7 group-hover:scale-110 transition-transform" />
-            </button>
-          </div>
+      {/* ================= TABLE SECTION ================= */}
+      <div
+        className="
+        bg-white dark:bg-slate-900
+        border border-teal-100 dark:border-cyan-800
+        rounded-2xl p-5 shadow-sm hover:shadow-md
+        transition-all duration-300 space-y-4
+      "
+      >
+        {/* HEADER */}
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <div className="flex items-center gap-2">
+            <div className="p-2 rounded-lg bg-teal-100 dark:bg-cyan-900/30">
+              <Users className="w-5 h-5 text-teal-600 dark:text-cyan-300" />
+            </div>
 
-          {/* CSV Uploader */}
-          <CSVUploader onOfficersUpdate={handleOfficersUpdate} />
-        </div>
-
-        {/* Table Section */}
-        <div
-          className="space-y-4 sm:space-y-6 
-  bg-white/50 border-teal-200/30 
-  dark:bg-slate-800/60 dark:border-cyan-700/50 
-  backdrop-blur-sm rounded-2xl p-4 sm:p-6 transition-all duration-500"
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-            <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2">
-              <span className="inline-block w-1 h-8 bg-gradient-to-b from-teal-600 to-cyan-600 rounded-full"></span>
-              <span className="text-black dark:text-cyan-100 font-bold">
-                Officers
-              </span>{" "}
-              <span className="ml-1 text-xs sm:text-base text-black dark:text-cyan-200 font-semibold">
-                ({officers.length})
-              </span>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+              Officers ({officers.length})
             </h2>
-            {officers.length > 0 && (
-              <button
-                onClick={() => {
-                  if (confirm("Delete all officers? This cannot be undone.")) {
-                    setOfficers([]);
-                    toast.success("All officers deleted!");
-                  }
-                }}
-                className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-red-500 hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-800 text-white dark:text-white text-sm sm:text-base font-medium rounded-xl transition-all duration-300 shadow-md hover:shadow-lg active:scale-95"
-              >
-                <Trash2 className="w-4 h-4" />
-                <span className="hidden sm:inline">Delete All</span>
-                <span className="sm:hidden">Delete</span>
-              </button>
-            )}
           </div>
-          <OfficersTable
-            officers={officers}
-            onOfficersUpdate={handleOfficersUpdate}
-          />
+
+          {officers.length > 0 && (
+            <button
+              onClick={() => {
+                if (confirm("Delete all officers?")) {
+                  setOfficers([]);
+                  toast.success("All officers deleted");
+                }
+              }}
+              className="
+                flex items-center gap-2 px-3 py-2 rounded-lg
+                bg-red-500 hover:bg-red-600
+                text-white text-sm font-medium
+                shadow-sm hover:shadow-md transition
+              "
+            >
+              <Trash2 className="w-4 h-4" />
+              Delete All
+            </button>
+          )}
         </div>
+
+        {/* TABLE */}
+        <OfficersTable
+          officers={officers}
+          onOfficersUpdate={handleOfficersUpdate}
+        />
       </div>
 
-      {/* Add Officer Dialog */}
+      {/* ================= DIALOG ================= */}
       <AddOfficerDialog
         isOpen={isAddDialogOpen}
         onClose={() => setIsAddDialogOpen(false)}
