@@ -46,16 +46,8 @@ export default function AddOfficerDialog({ isOpen, onClose, onAddOfficer }) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
-        showCloseButton={false} // ✅ IMPORTANT FIX
-        className="
-        max-w-3xl p-0 overflow-hidden
-        rounded-3xl
-        border border-gray-200 dark:border-cyan-900
-        bg-gradient-to-b from-white via-gray-50 to-gray-100
-        dark:from-slate-900 dark:via-slate-900 dark:to-slate-950
-        shadow-[0_40px_120px_rgba(0,0,0,0.25)]
-        [&>button]:hidden
-      "
+        showCloseButton={false}
+        className="max-w-3xl p-0 rounded-3xl h-[90vh] flex flex-col overflow-hidden border border-gray-200 dark:border-cyan-900 bg-gradient-to-b from-white via-gray-50 to-gray-100 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 shadow-[0_40px_120px_rgba(0,0,0,0.25)] [&>button]:hidden"
       >
         {/* TOP GLOW BAR */}
         <div className="h-1.5 bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500" />
