@@ -45,10 +45,7 @@ export default function AddOfficerDialog({ isOpen, onClose, onAddOfficer }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent
-        showCloseButton={false}
-        className="max-w-3xl p-0 rounded-3xl h-[90vh] flex flex-col overflow-hidden border border-gray-200 dark:border-cyan-900 bg-gradient-to-b from-white via-gray-50 to-gray-100 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 shadow-[0_40px_120px_rgba(0,0,0,0.25)] [&>button]:hidden"
-      >
+      <DialogContent className="max-w-3xl p-0 rounded-3xl h-[90vh] flex flex-col overflow-hidden border border-gray-200 dark:border-cyan-900 bg-gradient-to-b from-white via-gray-50 to-gray-100 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 shadow-[0_40px_120px_rgba(0,0,0,0.25)] [&>button]:hidden">
         {/* TOP GLOW BAR */}
         <div className="h-1.5 bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500" />
 
@@ -251,19 +248,30 @@ function RoleCard({ active, onClick, icon, title, desc }) {
     <div
       onClick={onClick}
       className={`
-        p-4 rounded-2xl cursor-pointer border transition-all
+        w-full
+        p-3 sm:p-4 md:p-5
+        rounded-xl sm:rounded-2xl
+        cursor-pointer border
+        transition-all duration-300
+
+        flex flex-col gap-1 sm:gap-2
+
         ${
           active
             ? "bg-gradient-to-br from-teal-600 to-cyan-600 text-white shadow-lg scale-[1.02]"
-            : "bg-white dark:bg-slate-800 border-gray-300 dark:border-cyan-800 hover:border-teal-400 hover:shadow-md"
+            : "bg-white dark:bg-slate-800 border-gray-300 dark:border-cyan-800 hover:border-teal-400 hover:shadow-md active:scale-[0.98]"
         }
       `}
     >
-      <div className="flex items-center gap-2 mb-2">
-        {icon}
-        <span className="font-semibold">{title}</span>
+      {/* TOP ROW */}
+      <div className="flex items-center gap-2">
+        <div className="text-sm sm:text-base md:text-lg">{icon}</div>
+
+        <span className="font-semibold text-sm sm:text-base">{title}</span>
       </div>
-      <p className="text-xs opacity-80">{desc}</p>
+
+      {/* DESCRIPTION */}
+      <p className="text-[10px] sm:text-xs opacity-80 leading-tight">{desc}</p>
     </div>
   );
 }
