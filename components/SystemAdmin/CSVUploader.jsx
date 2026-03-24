@@ -71,11 +71,40 @@ export default function CSVUploader({ onOfficersUpdate }) {
       onDrop={handleDrop}
       onClick={() => document.getElementById("csv-upload")?.click()}
       className={`
-        relative cursor-pointer rounded-3xl 
+        relative cursor-pointer rounded-2xl
         px-4 py-6 sm:px-6 sm:py-8 md:p-10
-        transition-all duration-500
-        overflow-hidden group
-        ${dragActive ? "scale-[1.01]" : "hover:scale-[1.01]"}
+
+        transition-all duration-300 ease-out
+        group
+
+        border-2 border-dashed
+
+        /* ✅ STRONGER LIGHT MODE BORDER */
+        border-teal-500/50 
+        dark:border-cyan-500/40
+
+        /* ✅ BASE BACKGROUND */
+        bg-white dark:bg-slate-900
+
+        /* ✅ SHADOW */
+        shadow-sm dark:shadow-[0_10px_40px_rgba(0,255,255,0.08)]
+
+        /* ✅ HOVER EFFECTS */
+        hover:scale-[1.015]
+        hover:bg-teal-50/60 dark:hover:bg-slate-800
+        hover:border-teal-600 dark:hover:border-cyan-400
+        hover:shadow-lg dark:hover:shadow-[0_20px_60px_rgba(0,255,255,0.18)]
+
+        ${
+          dragActive
+            ? `
+          scale-[1.02]
+          bg-teal-50 dark:bg-slate-800
+          border-teal-600 dark:border-cyan-300
+          shadow-xl
+        `
+            : ""
+        }
       `}
     >
       {/* INPUT */}
@@ -87,37 +116,23 @@ export default function CSVUploader({ onOfficersUpdate }) {
         onChange={(e) => handleFileUpload(e.target.files[0])}
       />
 
-      {/* 🌈 GRADIENT BORDER */}
-      <div
-        className="
-        absolute inset-0 rounded-3xl p-[1.5px]
-        bg-gradient-to-br from-teal-400 via-cyan-400 to-teal-500
-        opacity-80 group-hover:opacity-100 transition
-      "
-      >
-        <div className="w-full h-full rounded-3xl bg-white dark:bg-slate-900" />
-      </div>
-
-      {/* INNER GLOW */}
-      <div
-        className={`
-        absolute inset-0 rounded-3xl transition
-        ${dragActive ? "bg-teal-500/10 dark:bg-cyan-500/10" : ""}
-      `}
-      />
-
       {/* CONTENT */}
-      <div className="relative flex flex-col items-center text-center gap-4 sm:gap-6">
+      <div className="flex flex-col items-center text-center gap-4 sm:gap-6">
         {/* ICON */}
         <div
           className={`
           w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20
-          rounded-2xl sm:rounded-3xl flex items-center justify-center
+          rounded-xl sm:rounded-2xl flex items-center justify-center
+
           bg-gradient-to-br from-teal-500 to-cyan-600
-          shadow-lg sm:shadow-xl transition-all duration-500
+          text-white
+
+          shadow-md sm:shadow-lg
+          transition-all duration-300
+
           ${
             dragActive
-              ? "scale-105 shadow-cyan-500/40"
+              ? "scale-110 shadow-cyan-500/40"
               : "group-hover:scale-105"
           }
         `}
@@ -125,11 +140,11 @@ export default function CSVUploader({ onOfficersUpdate }) {
           {loading ? (
             <div className="w-6 h-6 sm:w-8 sm:h-8 border-4 border-white/30 border-t-white rounded-full animate-spin" />
           ) : success ? (
-            <CheckCircle2 className="text-white w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
+            <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
           ) : dragActive ? (
-            <UploadCloud className="text-white w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
+            <UploadCloud className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
           ) : (
-            <FileSpreadsheet className="text-white w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
+            <FileSpreadsheet className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
           )}
         </div>
 
@@ -162,15 +177,6 @@ export default function CSVUploader({ onOfficersUpdate }) {
           Smart parsing • Auto validation • Clean import
         </div>
       </div>
-
-      {/* BACKGROUND EFFECT */}
-      <div
-        className="
-        absolute inset-0 opacity-20 pointer-events-none
-        bg-[radial-gradient(circle_at_30%_30%,#14b8a6,transparent_40%)]
-        animate-pulse
-      "
-      />
     </div>
   );
 }
