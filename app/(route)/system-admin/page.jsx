@@ -8,6 +8,7 @@ import OfficersTable from "@/components/SystemAdmin/OfficersTable";
 import AddOfficerDialog from "@/components/SystemAdmin/AddOfficerDialog";
 import { transformOfficerData } from "@/lib/transformData";
 import { toast } from "sonner";
+import { ModeToggle } from "@/components/ModeToggle";
 
 export default function SystemAdminPage() {
   const [officers, setOfficers] = useState([]);
@@ -58,6 +59,8 @@ export default function SystemAdminPage() {
 
         {/* ACTION BUTTONS */}
         <div className="flex items-center gap-3 flex-wrap">
+          <ModeToggle />
+          
           <button
             onClick={() => setIsAddDialogOpen(true)}
             className="
