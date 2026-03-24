@@ -1,0 +1,7 @@
+fullName,email,dob,phone,state,city,district,department,role,specialisation
+Amit Sharma,amit.sharma@gov.in,1990-05-14,9876543210,West Bengal,Kolkata,Kolkata Municipal Corporation,Sanitation,field_officer,Waste Management
+Riya Gupta,riya.gupta@gov.in,1988-11-22,9123456780,West Bengal,Howrah,Howrah Municipal Corporation,Water Supply,unit_officer,Water Distribution
+Sourav Das,sourav.das@gov.in,1992-03-08,9988776655,West Bengal,Durgapur,Paschim Bardhaman,Road Maintenance,field_officer,Road Repair
+Neha Verma,neha.verma@gov.in,1987-07-19,9871234567,West Bengal,Asansol,Paschim Bardhaman,Electricity,unit_officer,Grid Management
+Rahul Sen,rahul.sen@gov.in,1991-09-30,9765432109,West Bengal,Siliguri,Darjeeling,Public Health,field_officer,Sanitation Inspection
+Anjali Roy,anjali.roy@gov.in,1989-01-25,9654321098,West Bengal,Kolkata,South 24 Parganas,Urban Planning,unit_officer,Infrastructure Planning
