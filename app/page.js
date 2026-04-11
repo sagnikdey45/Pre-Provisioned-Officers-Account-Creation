@@ -15,6 +15,9 @@ const page = () => {
       <Button variant="outline" onClick={() => router.push("/system-admin")}>
         Go to System Admin Page
       </Button>
+      <Button variant="outline" onClick={() => router.push("/city-admin")}>
+        Go to City Admin Page
+      </Button>
       <ModeToggle />
     </div>
   );

@@ -8,8 +8,8 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-import { parseCSVFileO } from "@/lib/csvParser";
-import { validateOfficerData } from "@/lib/validateOfficerData";
+import { parseCSVFileA } from "@/lib/csvParser";
+import { validateAdminData } from "@/lib/validateOfficerData";
 import { toast } from "sonner";
 
 export default function CSVUploader({ onOfficersUpdate }) {
@@ -27,14 +27,14 @@ export default function CSVUploader({ onOfficersUpdate }) {
     setSuccess(false);
 
     try {
-      const parsed = await parseCSVFileO(file);
+      const parsed = await parseCSVFileA(file);
 
       if (!parsed.length) {
         toast.error("No valid data found");
         return;
       }
 
-      const validated = validateOfficerData(parsed);
+      const validated = validateAdminData(parsed);
 
       if (!validated.length) {
         toast.error("Invalid CSV structure");
@@ -155,7 +155,7 @@ export default function CSVUploader({ onOfficersUpdate }) {
                 ? "Upload Successful!"
                 : dragActive
                   ? "Drop your CSV here"
-                  : "Upload Officers CSV"}
+                  : "Upload City Admin CSV"}
           </h2>
 
           <p className="text-xs sm:text-sm mt-1 text-gray-600 dark:text-gray-400">
